@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+import subprocess  # 用于执行 git 命令
 
 # ====== 1. 路径配置 ======
 BASE_DIR = Path(__file__).parent
@@ -39,3 +40,11 @@ print(" - tasks_all.md")               # 全量任务（完整数据库快照）
 print(" - tasks_todo.md")              # 待办任务（Agent 主用）
 print(" - tasks_done.md")              # 已完成任务（复盘 / 归档）
 print(" - tasks_overdue.md")           # 已逾期任务（风险 / 提醒）
+
+# ====== 8. 自动推送到 GitHub ======
+# 执行 Git 命令，推送更改到 GitHub
+subprocess.run(["git", "add", "."])  # 添加所有改动到 Git
+subprocess.run(["git", "commit", "-m", "Auto update md files"])  # 提交更改
+subprocess.run(["git", "push", "origin", "main"])  # 推送到 GitHub
+
+print("✅ Markdown 已自动推送到 GitHub！")
